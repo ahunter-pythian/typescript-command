@@ -1,2 +1,2 @@
 # typescript-command
-A solution for node.js command-line interfaces written in TypeScript
+A node.js command-line interface written in TypeScript
