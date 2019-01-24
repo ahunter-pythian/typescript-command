@@ -19,6 +19,7 @@ export interface ITodo {
 
 export class TodoRequest {
 
+/*
     public static async getTodo(id: number): Promise<ITodo> {
         const todo: ITodo = {} as ITodo;
         const site: string = "https://jsonplaceholder.typicode.com/";
@@ -56,6 +57,7 @@ export class TodoRequest {
         }
         return todo;
     }
+*/
 
     protected static getRequest(url: string): Promise<superagent.Response> {
         return new Promise<superagent.Response>((resolve, reject) => {
