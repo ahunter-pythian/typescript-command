@@ -12,63 +12,50 @@ export interface ITodo {
     id: number;
     title: string;
     completed: boolean;
+}
+
+export interface IError {
     status: number;
-    ok: boolean;
-    error: string;
+    message: string;
 }
 
 export class TodoRequest {
 
-/*
     public static async getTodo(id: number): Promise<ITodo> {
-        const todo: ITodo = {} as ITodo;
-        const site: string = "https://jsonplaceholder.typicode.com/";
-        const query = "todos/" + id;
-        const res: superagent.Response = await TodoRequest.getRequest(site + query).catch((error) => {
-            if (error.message) {
-                todo.error = error.message;
-            }
-            if (error.status) {
-                todo.status = error.status;
-            }
-            todo.ok = false;
-            return todo;
-        });
-        if (res.status) {
-            todo.status = res.status;
-        }
-        if (res.ok) {
-            todo.ok = res.ok;
-        }
-        if (res.body) {
-            if (res.body.id) {
-                todo.id = res.body.id;
-            }
-            if (res.body.userId) {
-                todo.userId = res.body.userId;
-            }
-            if (res.body.title) {
-                todo.title = res.body.title;
-            }
-            if (res.body.completed) {
-                todo.completed = res.body.completed;
-            }
-            todo.ok = true;
-        }
-        return todo;
-    }
-*/
-
-    protected static getRequest(url: string): Promise<superagent.Response> {
-        return new Promise<superagent.Response>((resolve, reject) => {
+        return new Promise<ITodo>((resolve, reject) => {
+            const site: string = "https://jsonplaceholder.typicode.com/";
+            const query = "todos/" + id;
+            const url = site + query;
             superagent
                 .get(url)
                 .set("Content-Type", "application/json")
                 .end((err, res) => {
-                    if (!err) {
-                        resolve(res);
+                    if (err) {
+                        const error: IError = {} as IError;
+                        if (err.message) {
+                            error.message = err.message;
+                        }
+                        if (err.status) {
+                            error.status = err.status;
+                        }
+                        reject(error);
                     } else {
-                        reject(err);
+                        const todo: ITodo = {} as ITodo;
+                        if (res.body) {
+                            if (res.body.id) {
+                                todo.id = res.body.id;
+                            }
+                            if (res.body.userId) {
+                                todo.userId = res.body.userId;
+                            }
+                            if (res.body.title) {
+                                todo.title = res.body.title;
+                            }
+                            if (res.body.completed) {
+                                todo.completed = res.body.completed;
+                            }
+                        }
+                        resolve(todo);
                     }
                 });
         });
