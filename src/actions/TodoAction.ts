@@ -6,12 +6,16 @@
  * Hunter.
  *************************************************************************************************************************/
 import {AbstractAction} from "./AbstractAction";
-//import {ITodo, TodoRequest} from "./TodoRequest";
+import {IError, ITodo, TodoRequest} from "./TodoRequest";
 
 export class TodoAction extends AbstractAction {
     public async handle(id: number) {
-        //const todo: ITodo = await TodoRequest.getTodo(id);
-        //console.log(JSON.stringify(todo, null, 2));
-        console.log("Not implemented for " + id);
+        await TodoRequest.getTodo(id).then((value: ITodo) => {
+            console.log("Todo Request Successful");
+            console.log(JSON.stringify(value, null, 2));
+        }, (error: IError) => {
+            console.log("Todo Request Failed");
+            console.log(JSON.stringify(error, null, 2));
+        });
     }
 }
