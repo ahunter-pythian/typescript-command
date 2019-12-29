@@ -7,14 +7,28 @@
  *************************************************************************************************************************/
 import {CommanderStatic} from "commander";
 import {AbstractCommand} from "./AbstractCommand";
+import * as readline from "readline-sync";
 
 export class QuestionCommand extends AbstractCommand {
-    public load(program: CommanderStatic) {
+    public initCommand(program: CommanderStatic) {
         program
             .command("question")
             .description("Ask a question command")
             .action(async () => {
-                await this.action.handle();
+                await this.handle();
             });
     }
+
+    public async handle(): Promise<void> {
+        let done: boolean = false;
+        while (!done) {
+            const question = readline.question("Type a question or type <done> to exit: ");
+            if (question === "done") {
+                done = true;
+                break;
+            }
+            console.log("The answer to \"" + question + "\" is No");
+        }
+    }
+
 }
