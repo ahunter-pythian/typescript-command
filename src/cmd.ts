@@ -10,15 +10,10 @@ import * as commander from "commander";
 import {CommanderStatic} from "commander";
 import {CommandLoader} from "./commands/CommandLoader";
 
-const bootstrap = () => {
-    const program: CommanderStatic = commander;
-    program.version(require("../package.json").version);
-    CommandLoader.load(program);
-    program.parse(process.argv);
-    if (program.args.length === 0) {
-        program.help();
-    }
-
-};
-
-bootstrap();
+const program: CommanderStatic = commander;
+program.version(require("../package.json").version);
+CommandLoader.load(program);
+program.parse(process.argv);
+if (program.args.length === 0) {
+    program.help();
+}
