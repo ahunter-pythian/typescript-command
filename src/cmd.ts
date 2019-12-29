@@ -14,6 +14,6 @@ const program: CommanderStatic = commander;
 program.version(require("../package.json").version);
 CommandLoader.load(program);
 program.parse(process.argv);
-if (program.args.length === 0) {
+if (process.argv.length < 3) {
     program.help();
 }
