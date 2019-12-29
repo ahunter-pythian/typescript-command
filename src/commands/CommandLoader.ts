@@ -6,17 +6,14 @@
  * Hunter.
  *************************************************************************************************************************/
 import {CommanderStatic} from "commander";
-import {HelloAction} from "../actions/HelloAction";
-import {QuestionAction} from "../actions/QuestionAction";
-import {TodoAction} from "../actions/TodoAction";
 import {HelloCommand} from "./HelloCommand";
 import {QuestionCommand} from "./QuestionCommand";
 import {TodoCommand} from "./TodoCommand";
 
 export class CommandLoader {
     public static load(program: CommanderStatic): void {
-        new HelloCommand(new HelloAction()).load(program);
-        new QuestionCommand(new QuestionAction()).load(program);
-        new TodoCommand(new TodoAction()).load(program);
+        new HelloCommand().initCommand(program);
+        new QuestionCommand().initCommand(program);
+        new TodoCommand().initCommand(program);
     }
 }
