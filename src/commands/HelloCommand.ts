@@ -9,12 +9,17 @@ import {CommanderStatic} from "commander";
 import {AbstractCommand} from "./AbstractCommand";
 
 export class HelloCommand extends AbstractCommand {
-    public load(program: CommanderStatic) {
+    public initCommand(program: CommanderStatic) {
         program
             .command("hello")
             .description("The hello command")
             .action(async () => {
-                await this.action.handle();
+                await this.handle();
             });
     }
+
+    public async handle(): Promise<void> {
+        console.log("hello");
+    }
+
 }
