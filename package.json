@@ -20,7 +20,7 @@
   "devDependencies": {
     "@types/jest": "24.0.25",
     "@types/node": "13.1.1",
-    "@types/readline-sync": "^1.4.3",
+    "@types/readline-sync": "1.4.3",
     "@types/superagent": "4.1.4",
     "jest": "24.9.0",
     "ts-jest": "24.2.0",
