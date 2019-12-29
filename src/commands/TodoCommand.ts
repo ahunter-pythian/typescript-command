@@ -7,14 +7,27 @@
  *************************************************************************************************************************/
 import {CommanderStatic} from "commander";
 import {AbstractCommand} from "./AbstractCommand";
+import {IError, ITodo, TodoRequest} from "./TodoRequest";
 
 export class TodoCommand extends AbstractCommand {
-    public load(program: CommanderStatic) {
+    public initCommand(program: CommanderStatic) {
         program
-            .command("todo <id>")
+            .command("todo")
+            .requiredOption("--id <id>", "must provide an id")
             .description("Get a todo from jsonplaceholder")
-            .action(async (id) => {
-                await this.action.handle(id);
+            .action(async (args: any) => {
+                await this.handle(args);
             });
     }
+    public async handle(args: any): Promise<void> {
+        const options = args.opts();
+        await TodoRequest.getTodo(options.id).then((value: ITodo) => {
+            console.log("Todo Request Successful");
+            console.log(JSON.stringify(value, null, 2));
+        }, (error: IError) => {
+            console.log("Todo Request Failed");
+            console.log(JSON.stringify(error, null, 2));
+        });
+    }
+
 }
