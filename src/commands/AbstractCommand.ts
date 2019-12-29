@@ -6,11 +6,7 @@
  * Hunter.
  *************************************************************************************************************************/
 import {CommanderStatic} from "commander";
-import {AbstractAction} from "../actions/AbstractAction";
 
 export abstract class AbstractCommand {
-    public constructor(protected action: AbstractAction) {
-    }
-
-    public abstract load(program: CommanderStatic): void;
+    public abstract initCommand(program: CommanderStatic): void;
 }
