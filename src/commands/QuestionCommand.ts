@@ -24,6 +24,7 @@ export class QuestionCommand extends AbstractCommand {
         while (!done) {
             const question = readline.question("Type a question or type <done> to exit: ");
             if (question === "done") {
+                console.log("bye");
                 done = true;
                 break;
             }
