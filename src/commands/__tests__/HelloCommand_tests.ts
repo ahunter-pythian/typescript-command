@@ -11,8 +11,10 @@ import {HelloCommand} from "../HelloCommand";
 
 describe("HelloCommand Tests",  () => {
     it("can create a HelloCommand instance", async () => {
+        const consoleSpy = jest.spyOn(console, "log");
         const program: CommanderStatic = commander;
         new HelloCommand().initCommand(program);
-        program.parse([ "node", "cmd-command", "hello" ]);
+        await program.parse([ "node", "cmd-command", "hello" ]);
+        expect(consoleSpy).toHaveBeenCalledWith("hello");
     });
 });
