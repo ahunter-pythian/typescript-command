@@ -51,7 +51,7 @@ export class TodoRequest {
                             if (res.body.title) {
                                 todo.title = res.body.title;
                             }
-                            if (res.body.completed) {
+                            if (res.body.hasOwnProperty("completed")) {
                                 todo.completed = res.body.completed;
                             }
                         }
