@@ -14,7 +14,7 @@ const superagentMock = require("../__mocks__/superagent");
 jest.mock("superagent");
 
 describe("TodoCommand Tests", () => {
-    it("can create a TodoCommand instance", async () => {
+    it("can create a successful TodoCommand instance", async () => {
         const response = {
             userId: 1,
             id: 5,
@@ -23,11 +23,19 @@ describe("TodoCommand Tests", () => {
             completed: false
         };
         superagentMock.__setMockResponseBody(response);
-        //const consoleSpy = jest.spyOn(console, "log");
         const program: CommanderStatic = commander;
         new TodoCommand().initCommand(program);
         await program.parse(["node", "cmd-command", "todo", "--id", "5"]);
-        //expect(consoleSpy).toHaveBeenCalledWith("Todo Request Successful");
-        //expect(consoleSpy).toHaveBeenCalledWith("\"userid\"");
+    });
+
+    it("can create an unsuccessful TodoCommand instance", async () => {
+        superagentMock.__setMockResponse({});
+        const response = {
+            status: 404, message: "Not Found"
+        };
+        superagentMock.__setMockError(response);
+        const program: CommanderStatic = commander;
+        new TodoCommand().initCommand(program);
+        await program.parse(["node", "cmd-command", "todo", "--id", "50000"]);
     });
 });
