@@ -34,6 +34,11 @@
     "readline-sync": "1.4.10",
     "superagent": "6.1.0"
   },
+  "resolutions": {
+    "jest/**/kind-of": "^6.0.3",
+    "jest/**/lodash": "^4.17.19",
+    "jest/**/minimist": "^1.2.5"
+  },
   "jest": {
     "collectCoverageFrom": [
       "src/**/*.ts",
