@@ -15,13 +15,12 @@ export class TodoCommand extends AbstractCommand {
             .command("todo")
             .requiredOption("--id <id>", "must provide an id")
             .description("Get a todo from jsonplaceholder")
-            .action(async (args: any) => {
-                await this.handle(args);
+            .action(async (options: any) => {
+                await this.handle(options.id);
             });
     }
-    public async handle(args: any): Promise<void> {
-        const options = args.opts();
-        await TodoRequest.getTodo(options.id).then((value: ITodo) => {
+    public async handle(id: number): Promise<void> {
+        await TodoRequest.getTodo(id).then((value: ITodo) => {
             console.log("Todo Request Successful");
             console.log(JSON.stringify(value, null, 2));
         }, (error: IError) => {
