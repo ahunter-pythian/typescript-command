@@ -28,7 +28,7 @@ describe("TodoRequest Tests", () => {
             expect(value.title).toBe(response.title);
             expect(value.completed).toBe(false);
         }, (error: IError) => {
-            fail("The test should not receive and error " + error.message);
+            fail("The test should not receive an error " + error.message);
         });
     });
 
@@ -39,7 +39,7 @@ describe("TodoRequest Tests", () => {
         };
         superagentMock.__setMockError(response);
         await TodoRequest.getTodo(5).then((value: ITodo) => {
-            fail("The test should not receive and error " + value.title);
+            fail("The test should not receive an error " + value.title);
         }, (error: IError) => {
             expect(error.status).toEqual(response.status);
             expect(error.message).toEqual(response.message);
