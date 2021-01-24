@@ -23,9 +23,13 @@ describe("TodoCommand Tests", () => {
             completed: false
         };
         superagentMock.__setMockResponseBody(response);
+        const consoleSpy = jest.spyOn(console, "log");
         const program: CommanderStatic = commander;
         new TodoCommand().initCommand(program);
         await program.parse(["node", "cmd-command", "todo", "--id", "5"]);
+        const flushPromises = () => new Promise(setImmediate);
+        await flushPromises();
+        expect(consoleSpy).toHaveBeenCalledWith("Todo Request Successful");
     });
 
     it("can create an unsuccessful TodoCommand instance", async () => {
@@ -34,8 +38,12 @@ describe("TodoCommand Tests", () => {
             status: 404, message: "Not Found"
         };
         superagentMock.__setMockError(response);
+        const consoleSpy = jest.spyOn(console, "log");
         const program: CommanderStatic = commander;
         new TodoCommand().initCommand(program);
         await program.parse(["node", "cmd-command", "todo", "--id", "50000"]);
+        const flushPromises = () => new Promise(setImmediate);
+        await flushPromises();
+        expect(consoleSpy).toHaveBeenCalledWith("Todo Request Failed");
     });
 });
