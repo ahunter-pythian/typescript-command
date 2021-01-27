@@ -1,5 +1,5 @@
 /*************************************************************************************************************************
- * Copyright (c) 2019, Anthony Hunter.
+ * Copyright (c) 2019, 2021, Anthony Hunter.
  * This unpublished material is proprietary to Anthony Hunter.
  * All rights reserved. The methods and techniques described herein are considered trade secrets and/or confidential.
  * Reproduction or distribution, in whole or in part, is forbidden except by express written permission of Anthony
@@ -21,7 +21,7 @@ describe("TodoRequest Tests", () => {
                 "Mock Title",
             completed: false
         };
-        superagentMock.__setMockResponseBody(response);
+        superagentMock.setMockResponseBody(response);
         await TodoRequest.getTodo(5).then((value: ITodo) => {
             expect(value.userId).toBe(response.userId);
             expect(value.id).toBe(response.id);
@@ -33,16 +33,16 @@ describe("TodoRequest Tests", () => {
     });
 
     it("an unsuccessful TodoRequest", async () => {
-        superagentMock.__setMockResponse({});
-        const response = {
+        superagentMock.setMockResponse({});
+        const errorResponse = {
             status: 404, message: "Not Found"
         };
-        superagentMock.__setMockError(response);
+        superagentMock.setMockError(errorResponse);
         await TodoRequest.getTodo(5).then((value: ITodo) => {
             fail("The test should not receive an error " + value.title);
         }, (error: IError) => {
-            expect(error.status).toEqual(response.status);
-            expect(error.message).toEqual(response.message);
+            expect(error.status).toEqual(errorResponse.status);
+            expect(error.message).toEqual(errorResponse.message);
         });
     });
 });
