@@ -1,3 +1,10 @@
+/*************************************************************************************************************************
+ * Copyright (c) 2019, 2021, Anthony Hunter.
+ * This unpublished material is proprietary to Anthony Hunter.
+ * All rights reserved. The methods and techniques described herein are considered trade secrets and/or confidential.
+ * Reproduction or distribution, in whole or in part, is forbidden except by express written permission of Anthony
+ * Hunter.
+ *************************************************************************************************************************/
 "use strict";
 let mockError;
 let mockResponse = {
@@ -22,16 +29,16 @@ let request = {
     end: jest.fn().mockImplementation((cb) => {
         cb(mockError, mockResponse);
     }),
-    __setMockResponse: (mockRes) => {
+    setMockResponse: (mockRes) => {
         mockResponse = mockRes;
     },
-    __setMockError: (mockErr) => {
+    setMockError: (mockErr) => {
         mockError = mockErr;
     },
-    __setMockResponseBody: (body) => {
+    setMockResponseBody: (body) => {
         mockResponse.body = body;
     },
-    __getRequestUrl: () => {
+    getRequestUrl: () => {
         return requestUrl;
     },
 };
