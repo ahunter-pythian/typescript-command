@@ -8,25 +8,26 @@
 import * as commander from "commander";
 import {CommanderStatic} from "commander";
 import {TodoCommand} from "../TodoCommand";
+import {IError, ITodo, TodoRequest} from "../TodoRequest";
 
-const superagentMock = require("../__mocks__/superagent");
-
-jest.mock("superagent");
+jest.mock('../TodoRequest');
+const mockedTodoRequest = TodoRequest as jest.Mocked<typeof TodoRequest>;
 
 describe("TodoCommand Tests", () => {
     it("can create a successful TodoCommand instance", async (done) => {
-        const response = {
+        const expectedResult: ITodo = {
             userId: 1,
             id: 5,
             title:
                 "Mock Title",
             completed: false
         };
-        superagentMock.setMockResponseBody(response);
+        mockedTodoRequest.getTodo.mockResolvedValueOnce(Promise.resolve(expectedResult));
         const consoleSpy = jest.spyOn(console, "log");
         const program: CommanderStatic = commander;
         new TodoCommand().initCommand(program);
         await program.parse(["node", "cmd-command", "todo", "--id", "5"]);
+        expect(mockedTodoRequest.getTodo).toHaveBeenCalled();
         const flushPromises = () => new Promise(setImmediate);
         await flushPromises();
         expect(consoleSpy).toHaveBeenCalledWith("Todo Request Successful");
@@ -34,15 +35,15 @@ describe("TodoCommand Tests", () => {
     });
 
     it("can create an unsuccessful TodoCommand instance", async (done) => {
-        superagentMock.setMockResponse({});
-        const response = {
+        const expectedResult: IError = {
             status: 404, message: "Not Found"
         };
-        superagentMock.setMockError(response);
+        mockedTodoRequest.getTodo.mockRejectedValueOnce(expectedResult);
         const consoleSpy = jest.spyOn(console, "log");
         const program: CommanderStatic = commander;
         new TodoCommand().initCommand(program);
         await program.parse(["node", "cmd-command", "todo", "--id", "50000"]);
+        expect(mockedTodoRequest.getTodo).toHaveBeenCalled();
         const flushPromises = () => new Promise(setImmediate);
         await flushPromises();
         expect(consoleSpy).toHaveBeenCalledWith("Todo Request Failed");
